@@ -45,7 +45,7 @@ pinout:
 
   # Bidirectional pins
   uio[0]: "Sen"
-  uio[1]: "Uen"
+  uio[1]: ""
   uio[2]: ""
   uio[3]: ""
   uio[4]: ""
