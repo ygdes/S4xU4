@@ -19,11 +19,13 @@ S and U are latched, then are complemented (```(x-1)^s```) with the sign bit of 
 
 This is the typical "shift & and" circuit that performs the typical binary multiplication.
 Except that the 2 most significant bits can be merged because S=8 (```U<<3```) can not happen
-when S > 8 (```U<<3```), thus saving some gates.
+when S > 8 (```U<<2```), thus saving some gates.
 
 ### Addition
 
 The 3 partial results are added through a first 3->2 compression layer and go through a classic CLA adder.
+
+Et voilà.
 
 ## How to test
 
