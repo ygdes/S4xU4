@@ -16,12 +16,30 @@ module tt_um_S4xU4 (
     input  wire       rst_n     // reset_n - low to reset
 );
 
+  // interface: what sup ?
+  wire [3:0] S;
+  wire [3:0] U;
+  wire [7:0] P;
+  assign S = ui_in[3:0];
+  assign U = ui_in[7:4];
+
+  wire Sen0, Sen1, Sen2, Uen0, Uen1, Uen2;
+  assign Sen0 = uio_in[0];
+  assign Sen1 = uio_in[1];
+  assign Sen2 = uio_in[2];
+  assign Uen0 = uio_in[3];
+  assign Uen1 = uio_in[4];
+  assign Uen2 = uio_in[5];
+
+  
+  // clk, rst_n,
+
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uo_out  = P; // output the product.
+  assign uio_out = 0; // no output on uio.
+  assign uio_oe  = 0; // uio port is only in.
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, 1'b0};
 
 endmodule
