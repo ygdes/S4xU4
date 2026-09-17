@@ -4,14 +4,13 @@ Two 4-bit operands are latched by DFFs on rising edges:
 * Clk latches the Unsigned operand
 * Sen latches the signed operand
 
-The product is almost immediately available as a signed 8-bit byte at the P output.
+The product is immediately available as a signed 8-bit byte at the P output.
 
 The MSB and LSB are trivial to get:
-* LSB is ```S[0] & U[O]``` because only odd times odd can make odd.
+* LSB is ```S[0] & U[O]``` (because only "odd times odd" can make "odd").
 * MSB is S[3] unless U=0000.
-but the 6 other bits require more efforts
 
-To get there, the data go through 3 stages:
+The 6 other bits require the data to go through 3 stages:
 
 ### Complement
 
