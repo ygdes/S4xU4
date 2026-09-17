@@ -1,20 +1,13 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
 
-Explain how your project works
+Two 4-bit operands are latched by DFFs at the respective inputs, when Uen and/or Sen go high.
+
+The product is available as a signed 8-bit byte at the P output.
 
 ## How to test
 
-Explain how to use your project
+Update the S and U inputs, raise the respective latch signals and observe the result at the P output port.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+Nothing fancy, a microcontroller will do the job.
