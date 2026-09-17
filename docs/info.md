@@ -1,8 +1,10 @@
 ## How it works
 
-Two 4-bit operands are latched by DFFs at the respective inputs, when Uen and/or Sen go high.
+Two 4-bit operands are latched by DFFs on rising edges:
+* Clk latches the Unsigned operand
+* Sen latches the signed operand
 
-The product is available as a signed 8-bit byte at the P output.
+The product is almost immediately available as a signed 8-bit byte at the P output.
 
 The MSB and LSB are trivial to get:
 * LSB is ```S[0] & U[O]``` because only odd times odd can make odd.
