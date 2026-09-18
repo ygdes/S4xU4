@@ -36,3 +36,23 @@ module FullAdderSG13negS (
   sg13_a22oi_1 a(.A1(d1), .A2(d2), .B1(t), .B2(d3), .Y(u));
   sg13_inv_1 i(.A(u), .Y(C));
 endmodule
+
+// same dumb Full Adder with entra temp output
+module FullAdderSG13_x (
+  input  wire d1,
+  input  wire d2,
+  input  wire d3,
+  output wire S,
+  output wire C,
+  output wire X
+);
+  wire u;
+
+  // sum:
+  sg13_xor2_1 x1 (.X(X), .A(d1), .B(d2));
+  sg13_xor2_1 x2 (.X(S), .A(X ), .B(d3));
+
+  // carry out:
+  sg13_a22oi_1 a(.A1(d1), .A2(d2), .B1(X), .B2(d3), .Y(u));
+  sg13_inv_1 i(.A(u), .Y(C));
+endmodule
