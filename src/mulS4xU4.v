@@ -53,5 +53,7 @@ module mulS4xU4(
   sg13_nor3_1 no3(.A(lSn[0]), .B(lSn[1]), .C(lSn[2]), .Y(lS3_t1));
   sg13_and2_1 an3(.A(lSn[3]), .B(lS3_t1), .X(cS[3]));
 
-  assign P={4'b0000, cS};
+// enlever les ports invesés des DFF en trop 
+  
+  assign P[7:1]={3'b000, cS};
 endmodule
