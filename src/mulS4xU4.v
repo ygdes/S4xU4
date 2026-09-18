@@ -53,8 +53,8 @@ module mulS4xU4(
 
   // cS[2] = lS[2]  (lS[3] and lS[0]  )
   wire lS2_t1, lS2_t2;
-  sg13_o21ai_1  oaS2(.A(lS[3]), .B(lS[0]), .C(lS[1]), .Y(lS2_t1));
-  sg13_xor2_1   xoS2(.A(lS[2]), .B(lS2_t1), .X(lS2_t2));
+  sg13_o21ai_1  oaS2(.B1(lS[3]), .A1(lS[0]), .A2(lS[1]), .Y(lS2_t1));
+  sg13_xor2_1   xoS2(.A(lS[2]),  .B(lS2_t1), .X(lS2_t2));
   sg13_inv_1    ivS2(.A(lS2_t2), .Y(cS[2])); // fo5
 
   // cS[3] = 1 when S=1000
@@ -77,5 +77,13 @@ module mulS4xU4(
   sg13_xor2_1   xoU1(.A(lU[1]), .B(lU1_t1), .X(lS1_t2));
   sg13_inv_1    ivU1(.A(lU1_t2), .Y(cU[1])); // fo4
 
+  // cU[2] = lU[2] ^ ~(lS[3] & (lU[0] | lU[1]))
+  wire lU2_t1, lU2_t2;
+  sg13_o21ai_1  oaU2(.B1(lS[3]), .A1(lU[0]), .A2(lU[1]), .Y(lU2_t1));
+  sg13_xor2_1   xoU2(.A(lU[2]),  .B(lU2_t1), .X(lU2_t2));
+  sg13_inv_1    ivU2(.A(lU2_t2), .Y(cU[2])); // fo4
+
+
+  
   assign P[7:1]={3'b000, cS};
 endmodule
