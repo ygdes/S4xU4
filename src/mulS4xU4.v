@@ -143,6 +143,10 @@ module mulS4xU4(
   ////////////////////
   // 3 partial results reduced to 2
 
+  wire A1, A2, A3n, A4n, A5n,
+           B2, B3n, B4n, B5n;
+
+  
 
   
   assign P[7:1]={cU[4], 2'b00, cS};
