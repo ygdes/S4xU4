@@ -19,6 +19,7 @@ project:
   source_files:
     - "project.v"
     - "mulS4xU4.v"
+    - "FullAdder_sg13.v"
     - "sg13_cells_sg13g2.v" # change to target techno
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
