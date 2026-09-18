@@ -24,13 +24,14 @@ module mulS4xU4(
   sg13_sdfrbpq_1 DffMx2(.Q(lS[2]),             .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
   sg13_sdfrbp_1  DffMx3(.Q(lS[3]), .Q_N(lSn3), .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
 
-  wire[3:0] lU, lUn;
+  wire[:0] lU;
   wire lUn0, // fo2
-       lUn3; // fo2
+       lUn3, // fo2
+       lUdum;
   sg13_sdfrbp_1  DffMx4(.Q(lU[0]), .Q_N(lUn0), .D(lU[0]), .SCD(U[0]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
   sg13_sdfrbpq_1 DffMx5(.Q(lU[1]),             .D(lU[1]), .SCD(U[1]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
   sg13_sdfrbpq_1 DffMx6(.Q(lU[2]),             .D(lU[2]), .SCD(U[2]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1  DffMx7(.Q(lU[3]), .Q_N(lUn3), .D(lU[3]), .SCD(U[3]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
+  sg13_sdfrbp_1  DffMx7(.Q(lUdum), .Q_N(lUn3), .D(lU[3]), .SCD(U[3]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
 
   // The easy one:
   // P[0] = S[0] & U[0]
@@ -83,7 +84,11 @@ module mulS4xU4(
   sg13_xor2_1   xoU2(.A(lU[2]),  .B(lU2_t1), .X(lU2_t2));
   sg13_inv_1    ivU2(.A(lU2_t2), .Y(cU[2])); // fo4
 
+  // cU[3] = lU[3] ^  (lS3n | ~(lU[0] | lU[1] | lU[2] ))
 
-  
+  sg13_inv_1    ivU3(.A(lU2_t2), .Y(cU[2])); // fo3
+
+
+
   assign P[7:1]={3'b000, cS};
 endmodule
