@@ -13,9 +13,12 @@ module mulS4xU4(
   output wire [7:0] P
 );
 
+  ////////////////////
   // The synchronous input latches:
+  ////////////////////
+  
   // uses the "scan" version for the integrated MUX, and complementary output.
-  // (though some negative outputs are not necessary and will be trimmed later)
+  // (though some outputs are not necessary and are trimmed)
   wire[3:0] lS;
   wire lSn0, // fo2
        lsn3;
@@ -24,7 +27,7 @@ module mulS4xU4(
   sg13_sdfrbpq_1 DffMx2(.Q(lS[2]),             .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
   sg13_sdfrbp_1  DffMx3(.Q(lS[3]), .Q_N(lSn3), .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
 
-  wire[:0] lU;
+  wire[2:0] lU;
   wire lUn0, // fo2
        lUn3, // fo2
        lUdum;
@@ -37,7 +40,10 @@ module mulS4xU4(
   // P[0] = S[0] & U[0]
   sg13_nor2_1 no0(.A(lSn0), .B(lUn0), .X(P[0]));
 
-  // S4 => unsigned
+
+  ////////////////////
+  // S4 => unsigned:
+  ////////////////////
   
   // Complements: -x = (~x)+1 = ~(x-1)
   // This operand must not be negative
@@ -65,7 +71,9 @@ module mulS4xU4(
   sg13_and2_1 anS3(.A(lS[3]), .B(lS3_t1), .X(cS[3])); // fo4
 
 
+  ////////////////////
   // U4 => signed 5 bits
+  ////////////////////
   
   wire[4:0] cU; // this is a sign-extended word that drives the columns of the shif&and replicator
 
@@ -85,10 +93,17 @@ module mulS4xU4(
   sg13_inv_1    ivU2(.A(lU2_t2), .Y(cU[2])); // fo4
 
   // cU[3] = lU[3] ^  (lS3n | ~(lU[0] | lU[1] | lU[2] ))
+  wire lU3_t0, lU3_t1, lU3_t2;
+  sg13_nor3_1 noU3(.A(lU[0]), .B(lU[1]),  .C(lU[2]), .Y(lU3_t0));
+  sg13_nor2_1 noU2(.A(lS3n), .B(lU3_t0),  .Y(lU3_t1));
+  sg13_xor2_1   xoU3(.A(lUn3),   .B(lU3_t1), .X(lU3_t2));
+  sg13_inv_1    ivU3(.A(lU3_t2), .Y(cU[3])); // fo4
 
-  sg13_inv_1    ivU3(.A(lU2_t2), .Y(cU[2])); // fo3
-
-
+  // cU[4] = lS3n & (lUn3 | lU3_t0)
+  wire lU4_t1;
+  sg13_a21oi_1  aoU4(.A1(lUn3), .A2(lU3_t0), .B1(lS3n), .Y(lU4_t1));
+  sg13_inv_1    ivU4(.A(lU4_t1), .Y(cU[4])); // fo3
 
   assign P[7:1]={3'b000, cS};
+  wire _unused = &{lUdum, 1'b0};
 endmodule
