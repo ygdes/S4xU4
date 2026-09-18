@@ -1,6 +1,7 @@
 // mulS4xU4.v
 // a small Signed×Unsigned multiplier
 // © 2026 Yann Guidon
+// https://www.falstad.com/s.php?s=3uLd6O
 
 module mulS4xU4(
   input  wire Clk,
@@ -16,11 +17,12 @@ module mulS4xU4(
   // uses the "scan" version for the integrated MUX, and complementary output.
   // (though some negative outputs are not necessary and will be trimmed later)
   wire[3:0] lS;
-  wire lSn0; // fo2
-  sg13_sdfrbp_1 DffMx0(.Q(lS[0]), .Q_N(lSn_0), .D(lS[0]), .SCD(S[0]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1 DffMx1(.Q(lS[1]),               .D(lS[1]), .SCD(S[1]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1 DffMx2(.Q(lS[2]),               .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1 DffMx3(.Q(lS[3]),               .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
+  wire lSn0, // fo2
+       lsn3;
+  sg13_sdfrbp_1  DffMx0(.Q(lS[0]), .Q_N(lSn_0), .D(lS[0]), .SCD(S[0]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx1(.Q(lS[1]),              .D(lS[1]), .SCD(S[1]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx2(.Q(lS[2]),              .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
+  sg13_sdfrbp_1  DffMx3(.Q(lS[3]), .Q_N(lSn_3), .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
 
   wire[3:0] lU, lUn;
   sg13_sdfrbp_1 DffMx4(.Q(lU[0]), .Q_N(lUn[0]), .D(lU[0]), .SCD(U[0]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
