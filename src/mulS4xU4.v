@@ -1,7 +1,10 @@
 // mulS4xU4.v
 // a small Signed×Unsigned multiplier
 // © 2026 Yann Guidon
-// https://www.falstad.com/s.php?s=Ir6c7z
+// complement+shift : https://www.falstad.com/s.php?s=cxwBPe
+// adder: https://www.falstad.com/s.php?s=wG0tgm
+
+// depends on FullAdder_sg13.v
 
 module mulS4xU4(
   input  wire Clk,
