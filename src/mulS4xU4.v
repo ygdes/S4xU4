@@ -116,7 +116,7 @@ module mulS4xU4(
   sg13_and2_1    aP02(.A(cS[0]), .B(cU[2]), .X(Partial0[2]));
   sg13_nand2_1  naP03(.A(cS[0]), .B(cU[3]), .Y(Partial0[3]));
   sg13_nand2_1  naP04(.A(cS[0]), .B(cU[4]), .Y(P0x));
-  Partial0[6:4]=  {P0x, P0x, P0x};
+  assign Partial0[6:4]=  {P0x, P0x, P0x};
   
   wire [6:1] Partial1;
   wire P1x; // fo2, sign extension
@@ -125,7 +125,7 @@ module mulS4xU4(
   sg13_nand2_1  naP13(.A(cS[1]), .B(cU[2]), .Y(Partial1[3]));
   sg13_nand2_1  naP14(.A(cS[1]), .B(cU[3]), .Y(Partial1[4]));
   sg13_nand2_1  naP15(.A(cS[1]), .B(cU[4]), .Y(P0x));
-  Partial1[6:5]=  {P1x, P1x};
+  assign Partial1[6:5]=  {P1x, P1x};
 
   wire [6:2] Partial2; // Combines 2 levels, because numbers magic and happy coincidences.
   sg13_and2_1    aP32(.A (cS[2]), .B (cU[0]),                         .X(Partial2[2]));
