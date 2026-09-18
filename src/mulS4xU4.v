@@ -104,6 +104,26 @@ module mulS4xU4(
   sg13_a21oi_1  aoU4(.A1(lUn3), .A2(lU3_t0), .B1(lS3n), .Y(lU4_t1));
   sg13_inv_1    ivU4(.A(lU4_t1), .Y(cU[4])); // fo3
 
-  assign P[7:1]={3'b000, cS};
+
+  ////////////////////
+  // Replicator : shift-and
+  ////////////////////
+
+  wire [6:1] Partial0;
+  wire P0x; // fo3
+  sg13_and2_1    aP01(.A(cS[0]), .B(cU[1]), .X(Partial0[1]));
+  sg13_and2_1    aP02(.A(cS[0]), .B(cU[2]), .X(Partial0[2]));
+  sg13_nand2_1  naP03(.A(cS[0]), .B(cU[3]), .Y(Partial0[3]));
+  sg13_nand2_1  naP04(.A(cS[0]), .B(cU[4]), .Y(P0x));
+  Partial0[6:4]=  {P0x, P0x, P0x};
+  
+  wire [6:1] Partial1;
+  wire P1x; // fo2
+
+
+  wire [6:2] Partial2;
+  
+  
+  assign P[7:1]={cU[4], 2'b00, cS};
   wire _unused = &{lUdum, 1'b0};
 endmodule
