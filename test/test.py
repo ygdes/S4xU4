@@ -35,8 +35,8 @@ async def test_project(dut):
 
   dut.uio_in.value = Sen0 + Uen0
 
-  for U in range(0, 15):
-    for S in range(-8, 7):
+  for U in range(0, 16):
+    for S in range(-8, 8):
       dut.ui_in.value = (U << 4)|(S & 15);
       await ClockCycles(dut.clk, 6)
       dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(int(dut.uo_out.value)))
