@@ -167,15 +167,25 @@ module mulS4xU4(
   sg13_or2_1   PGX2o(.A(A2),  .B(B2),  .X(P2));
 
   sg13_xor2_1  PGX3x(.A(A3n), .B(B3n), .X(X3));
-  sg13_nor2_1  PGX3o(.A(A3n), .B(B3n), .X(G3));
-  sg13_nand2_1 PGX3a(.A(A3n), .B(B3n), .X(P3));
+  sg13_nor2_1  PGX3o(.A(A3n), .B(B3n), .Y(G3));
+  sg13_nand2_1 PGX3a(.A(A3n), .B(B3n), .Y(P3));
 
   sg13_xor2_1  PGX4x(.A(A4n), .B(B4n), .X(X4));
-  sg13_nor2_1  PGX4o(.A(A4n), .B(B4n), .X(G4));
-  sg13_nand2_1 PGX4a(.A(A4n), .B(B4n), .X(P4));
+  sg13_nor2_1  PGX4o(.A(A4n), .B(B4n), .Y(G4));
+  sg13_nand2_1 PGX4a(.A(A4n), .B(B4n), .Y(P4));
 
   sg13_xor2_1  PGX5x(.A(A5n), .B(B5n), .X(X5));
 
+  // some intermediary signals
+  sg13_and2_1  (.A(Partial0[1]),  .B(Partial1[1]),         .X(G0));
+  sg13_and3_1  (.A(Partial0[1]),  .B(Partial1[1]), .C(A1), .X(G1));
+  sg13_and2_1  (.A(P3),  .B(P4),  .X(P34));
+
+  // at last some outputs:
+  sg13_xor2_1  (.A(Partial0[1]),  .B(Partial1[1]),  .X(P[1]));
+  sg13_xor2_1  (.A(G0),           .B(A1),           .X(P[2]));
+
+  
 
   wire _unused = &{lUdum, 1'b0};
 endmodule
