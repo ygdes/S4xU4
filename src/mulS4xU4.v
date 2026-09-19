@@ -2,7 +2,7 @@
 // a small Signed×Unsigned multiplier
 // © 2026 Yann Guidon
 // complement+shift : https://www.falstad.com/s.php?s=cxwBPe
-// adder: https://www.falstad.com/s.php?s=oeiuN3
+// adder: https://www.falstad.com/s.php?s=VlpSEz
 // depends on FullAdder_sg13.v
 
 module mulS4xU4(
@@ -145,22 +145,37 @@ module mulS4xU4(
 
   wire A1, A2, A3n, A4n, A5n,
            B2, B3n, B4n, B5n,
-     tx1, tx2;
+     tx1;
   FullAdderSG13     fa2(.d1(Partials0[2]), .d2(Partials1[2]), .d3(Partials2[2]),  .S(A1), .C(A2));
   FullAdderSG13negS fa3(.d1(Partials0[3]), .d2(Partials1[3]), .d3(Partials2[3]), .Sn(B2), .C(A3n));
   FullAdderSG13     fa4(.d1(Partials0[4]), .d2(Partials1[4]), .d3(Partials2[4]), .S(B3n), .C(A4n));
   FullAdderSG13_x   fa5(.d1(Partials0[4]), .d2(Partials1[5]), .d3(Partials2[5]), .S(B4n), .C(A5n), X(tx1));
-  sg13_xor2_1       rx1(                                      .A (Partials2[6]), .B(tx1), .X(B5n));
+  sg13_xor2_1       rx1(                                       .A(Partials2[6]), .B(tx1), .X(B5n));
 
 
   ////////////////////
   // Propagate/Generate
   ////////////////////
-  // PGX: the 3 critical gates for a CLA, but some polarities must be adjusted
+  wire G0, G1, G2, G3, G4,
+               P2, P3, P4,     P34,
+                   t3, t4, t5,
+               X2, X3, X4, X5;
+  // PGX: the 3 critical gates for a CLA, but some polarities
+  // must be adjusted due to inverted inputs 
+  sg13_xor2_1  PGX2x(.A(A2),  .B(B2),  .X(X2));
+  sg13_and2_1  PGX2a(.A(A2),  .B(B2),  .X(G2));
+  sg13_or2_1   PGX2o(.A(A2),  .B(B2),  .X(P2));
+
+  sg13_xor2_1  PGX3x(.A(A3n), .B(B3n), .X(X3));
+  sg13_nor2_1  PGX3o(.A(A3n), .B(B3n), .X(G3));
+  sg13_nand2_1 PGX3a(.A(A3n), .B(B3n), .X(P3));
+
+  sg13_xor2_1  PGX4x(.A(A4n), .B(B4n), .X(X4));
+  sg13_nor2_1  PGX4o(.A(A4n), .B(B4n), .X(G4));
+  sg13_nand2_1 PGX4a(.A(A4n), .B(B4n), .X(P4));
+
+  sg13_xor2_1  PGX5x(.A(A5n), .B(B5n), .X(X5));
 
 
-
-  
-//  assign P[7:1]={cU[4], 2'b00, cS};
   wire _unused = &{lUdum, 1'b0};
 endmodule
