@@ -39,7 +39,7 @@ async def test_project(dut):
     for S in range(-8, 7):
       dut.ui_in.value = (U << 4)|(S & 15);
       await ClockCycles(dut.clk, 1)
-      dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + int(dut.uo_out.value))
+      dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(int(dut.uo_out.value)))
 
     # Set the input values you want to test
     # dut.ui_in.value = 20
