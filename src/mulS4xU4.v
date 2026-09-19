@@ -23,24 +23,24 @@ module mulS4xU4(
   // (though some outputs are not necessary and are trimmed)
   wire[3:0] lS;
   wire lSn0, // fo2
-       lsn3;
-  sg13_sdfrbp_1  DffMx0(.Q(lS[0]), .Q_N(lSn0), .D(lS[0]), .SCD(S[0]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbpq_1 DffMx1(.Q(lS[1]),             .D(lS[1]), .SCD(S[1]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbpq_1 DffMx2(.Q(lS[2]),             .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1  DffMx3(.Q(lS[3]), .Q_N(lSn3), .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(rst_n), .CLK(Clk));
+       lSn3;
+  sg13_sdfrbp_1  DffMx0(.Q(lS[0]), .Q_N(lSn0), .D(lS[0]), .SCD(S[0]), .SCE(Sen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx1(.Q(lS[1]),             .D(lS[1]), .SCD(S[1]), .SCE(Sen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx2(.Q(lS[2]),             .D(lS[2]), .SCD(S[2]), .SCE(Sen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbp_1  DffMx3(.Q(lS[3]), .Q_N(lSn3), .D(lS[3]), .SCD(S[3]), .SCE(Sen), .RESET_B(Rst_n), .CLK(Clk));
 
   wire[2:0] lU;
   wire lUn0, // fo2
        lUn3, // fo2
        lUdum;
-  sg13_sdfrbp_1  DffMx4(.Q(lU[0]), .Q_N(lUn0), .D(lU[0]), .SCD(U[0]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbpq_1 DffMx5(.Q(lU[1]),             .D(lU[1]), .SCD(U[1]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbpq_1 DffMx6(.Q(lU[2]),             .D(lU[2]), .SCD(U[2]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
-  sg13_sdfrbp_1  DffMx7(.Q(lUdum), .Q_N(lUn3), .D(lU[3]), .SCD(U[3]), .SCE(Uen), .RESET_B(rst_n), .CLK(Clk));
+  sg13_sdfrbp_1  DffMx4(.Q(lU[0]), .Q_N(lUn0), .D(lU[0]), .SCD(U[0]), .SCE(Uen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx5(.Q(lU[1]),             .D(lU[1]), .SCD(U[1]), .SCE(Uen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbpq_1 DffMx6(.Q(lU[2]),             .D(lU[2]), .SCD(U[2]), .SCE(Uen), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_sdfrbp_1  DffMx7(.Q(lUdum), .Q_N(lUn3), .D(lU[3]), .SCD(U[3]), .SCE(Uen), .RESET_B(Rst_n), .CLK(Clk));
 
   // The easy one:
   // P[0] = S[0] & U[0]
-  sg13_nor2_1 no0(.A(lSn0), .B(lUn0), .X(P[0]));
+  sg13_nor2_1 no0(.A(lSn0), .B(lUn0), .Y(P[0]));
 
 
   ////////////////////
@@ -193,10 +193,10 @@ module mulS4xU4(
   sg13_xor2_1  xo4(.A(t3), .B(X3), .X(P[4]));
 
   sg13_a21oi_1  ao4(.A1(t3), .A2(P3), .B1(G3), .Y(t4));
-  sg13_xnor2_1  xo5(.A(t4),   .B(X4), .X(P[5]));
+  sg13_xnor2_1  xo5(.A(t4),   .B(X4), .Y(P[5]));
 
   sg13_a221oi_1 ao5(.A1(t3), .A2(P34), .B1(G3), .B2(P4), .C1(G4), .Y(t5));
-  sg13_xnor2_1  xo6(.A(t5), .B(X5), .X(P[6]));
+  sg13_xnor2_1  xo6(.A(t5), .B(X5), .Y(P[6]));
   
   wire _unused = &{lUdum, 1'b0};
 endmodule
