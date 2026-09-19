@@ -42,7 +42,10 @@ async def test_project(dut):
       val = int(dut.uo_out.value)
       if dut.uo_out.value[7] == 1:
         val = val-256
-      dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(val))
+      diag=" ."
+      if val != (U*S):
+         diag=" ***"
+      dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(val)+ diag)
 
     # Set the input values you want to test
     # dut.ui_in.value = 20
