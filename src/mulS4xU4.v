@@ -150,7 +150,7 @@ module mulS4xU4(
   FullAdderSG13negS fa3(.d1(Partial0[3]), .d2(Partial1[3]), .d3(Partial2[3]), .Sn(B2), .C(A3n));
   FullAdderSG13     fa4(.d1(Partial0[4]), .d2(Partial1[4]), .d3(Partial2[4]), .S(B3n), .C(A4n));
   FullAdderSG13_x   fa5(.d1(Partial0[4]), .d2(Partial1[5]), .d3(Partial2[5]), .S(B4n), .C(A5n), .X(tx1));
-  sg13_xor2_1       rx1(                                       .A(Partials2[6]), .B(tx1), .X(B5n));
+  sg13_xor2_1       rx1(                                     .A(Partial2[6]), .B(tx1), .X(B5n));
 
 
   ////////////////////
