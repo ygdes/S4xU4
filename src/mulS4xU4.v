@@ -149,7 +149,7 @@ module mulS4xU4(
   FullAdderSG13     fa2(.d1(Partials0[2]), .d2(Partials1[2]), .d3(Partials2[2]),  .S(A1), .C(A2));
   FullAdderSG13negS fa3(.d1(Partials0[3]), .d2(Partials1[3]), .d3(Partials2[3]), .Sn(B2), .C(A3n));
   FullAdderSG13     fa4(.d1(Partials0[4]), .d2(Partials1[4]), .d3(Partials2[4]), .S(B3n), .C(A4n));
-  FullAdderSG13_x   fa5(.d1(Partials0[4]), .d2(Partials1[5]), .d3(Partials2[5]), .S(B4n), .C(A5n), X(tx1));
+  FullAdderSG13_x   fa5(.d1(Partials0[4]), .d2(Partials1[5]), .d3(Partials2[5]), .S(B4n), .C(A5n), .X(tx1));
   sg13_xor2_1       rx1(                                       .A(Partials2[6]), .B(tx1), .X(B5n));
 
 
@@ -190,13 +190,13 @@ module mulS4xU4(
   sg13_a21o_1  ao(.A1(P2), .A2(G1), .B1(G2), .X(t3));
 
   // more outputs
-  sg13_xor2_1  xo3(.A(t3), .B(X3), .X(P[4]));
+  sg13_xor2_1  xo4(.A(t3), .B(X3), .X(P[4]));
 
-  sg13_a21oi_1 ao4(.A1(t3), .A2(P3), .B1(G3), .Y(t4));
-  sg13_xnor2_1  xo4(.A(t4), .B(X4), .X(P[5]));
+  sg13_a21oi_1  ao4(.A1(t3), .A2(P3), .B1(G3), .Y(t4));
+  sg13_xnor2_1  xo5(.A(t4),   .B(X4), .X(P[5]));
 
   sg13_a221oi_1 ao5(.A1(t3), .A2(P34), .B1(G3), .B2(P4), .C1(G4), .Y(t5));
-  sg13_xnor2_1  xo4(.A(t5), .B(X5), .X(P[6]));
+  sg13_xnor2_1  xo6(.A(t5), .B(X5), .X(P[6]));
   
   wire _unused = &{lUdum, 1'b0};
 endmodule
