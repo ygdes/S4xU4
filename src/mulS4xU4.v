@@ -1,7 +1,7 @@
 // mulS4xU4.v
 // a small Signed×Unsigned multiplier
 // © 2026 Yann Guidon
-// complement+shift : https://www.falstad.com/s.php?s=cxwBPe
+// complement+shift : https://www.falstad.com/s.php?s=OTRvLh
 // adder: https://www.falstad.com/s.php?s=VlpSEz
 // depends on FullAdder_sg13.v
 
@@ -94,16 +94,16 @@ module mulS4xU4(
   sg13_xor2_1   xoU2(.A(lU[2]),  .B(lU2_t1), .X(lU2_t2));
   sg13_inv_1    ivU2(.A(lU2_t2), .Y(cU[2])); // fo4
 
-  // cU[3] = lU[3] ^  (lS3n | ~(lU[0] | lU[1] | lU[2] ))
+  // cU[3] = lU[3] ^  (lSn3 | ~(lU[0] | lU[1] | lU[2] ))
   wire lU3_t0, lU3_t1, lU3_t2;
   sg13_nor3_1 noU3(.A(lU[0]),  .B(lU[1]),   .C(lU[2]), .Y(lU3_t0));
-  sg13_nor2_1 noU2(.A(lS3n),   .B(lU3_t0),  .Y(lU3_t1));
+  sg13_nor2_1 noU2(.A(lSn3),   .B(lU3_t0),  .Y(lU3_t1));
   sg13_xor2_1 xoU3(.A(lUn3),   .B(lU3_t1),  .X(lU3_t2));
   sg13_inv_1  ivU3(.A(lU3_t2), .Y(cU[3])); // fo4
 
-  // cU[4] = lS3n & (lUn3 | lU3_t0)
+  // cU[4] = lSn3 & (lUn3 | lU3_t0)
   wire lU4_t1;
-  sg13_a21oi_1  aoU4(.A1(lUn3), .A2(lU3_t0), .B1(lS3n), .Y(lU4_t1));
+  sg13_a21oi_1  aoU4(.A1(lUn3), .A2(lU3_t0), .B1(lSn3), .Y(lU4_t1));
   sg13_inv_1    ivU4(.A(lU4_t1), .Y(cU[4])); // fo3
 
   assign P[7]=cU[4];  // yeah, at last a 2nd bit !
@@ -146,10 +146,10 @@ module mulS4xU4(
   wire A1, A2, A3n, A4n, A5n,
            B2, B3n, B4n, B5n,
      tx1;
-  FullAdderSG13     fa2(.d1(Partials0[2]), .d2(Partials1[2]), .d3(Partials2[2]),  .S(A1), .C(A2));
-  FullAdderSG13negS fa3(.d1(Partials0[3]), .d2(Partials1[3]), .d3(Partials2[3]), .Sn(B2), .C(A3n));
-  FullAdderSG13     fa4(.d1(Partials0[4]), .d2(Partials1[4]), .d3(Partials2[4]), .S(B3n), .C(A4n));
-  FullAdderSG13_x   fa5(.d1(Partials0[4]), .d2(Partials1[5]), .d3(Partials2[5]), .S(B4n), .C(A5n), .X(tx1));
+  FullAdderSG13     fa2(.d1(Partial0[2]), .d2(Partial1[2]), .d3(Partial2[2]),  .S(A1), .C(A2));
+  FullAdderSG13negS fa3(.d1(Partial0[3]), .d2(Partial1[3]), .d3(Partial2[3]), .Sn(B2), .C(A3n));
+  FullAdderSG13     fa4(.d1(Partial0[4]), .d2(Partial1[4]), .d3(Partial2[4]), .S(B3n), .C(A4n));
+  FullAdderSG13_x   fa5(.d1(Partial0[4]), .d2(Partial1[5]), .d3(Partial2[5]), .S(B4n), .C(A5n), .X(tx1));
   sg13_xor2_1       rx1(                                       .A(Partials2[6]), .B(tx1), .X(B5n));
 
 
