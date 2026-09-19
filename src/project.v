@@ -19,7 +19,7 @@ module tt_um_S4xU4 (
   // interface: what sup ?
   wire [3:0] S;
   wire [3:0] U;
-  wire [7:0] P;
+    wire [7:0] P, tP;
   assign S = ui_in[3:0];
   assign U = ui_in[7:4];
 
@@ -31,10 +31,18 @@ module tt_um_S4xU4 (
   assign Uen1 = uio_in[4];
   assign Uen2 = uio_in[5];
 
-  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(P));
+  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(tP));
 
-  // TODO : latch the outputs
-
+  // latch the outputs to keep the timing tight
+  sg13_dfrbpq_1 DffBuff0(.Q(P[0]), .D(tP[0]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff1(.Q(P[1]), .D(tP[1]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff2(.Q(P[2]), .D(tP[2]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff3(.Q(P[3]), .D(tP[3]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff4(.Q(P[4]), .D(tP[4]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff5(.Q(P[5]), .D(tP[5]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff6(.Q(P[6]), .D(tP[6]), .RESET_B(Rst_n), .CLK(Clk));
+  sg13_dfrbpq_1 DffBuff7(.Q(P[7]), .D(tP[7]), .RESET_B(Rst_n), .CLK(Clk));
+  
   // "All output pins must be assigned. If not used, assign to 0."
   assign uo_out  = P; // output the product.
   assign uio_out = 0; // no output on uio.
