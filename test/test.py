@@ -7,12 +7,12 @@ from cocotb.triggers import ClockCycles
 
 #  assign S = ui_in[3:0];
 #  assign U = ui_in[7:4];
-#  assign Sen0 = uio_in[0];
-#  assign Sen1 = uio_in[1];
-#  assign Sen2 = uio_in[2];
-#  assign Uen0 = uio_in[3];
-#  assign Uen1 = uio_in[4];
-#  assign Uen2 = uio_in[5];
+Sen0 = 1
+Sen1 = 2
+Sen2 = 4
+Uen0 = 8
+Uen1 = 16
+Uen2 = 32
 
 @cocotb.test()
 async def test_project(dut):
@@ -32,6 +32,8 @@ async def test_project(dut):
   dut.rst_n.value = 1
 
   dut._log.info("Test project behavior")
+
+  dut.uio_in.value = Sen0 + Uen0
 
   for i in range(0, 255):
     dut.ui_in.value = i;
