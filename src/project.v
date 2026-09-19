@@ -31,15 +31,16 @@ module tt_um_S4xU4 (
   assign Uen1 = uio_in[4];
   assign Uen2 = uio_in[5];
 
-  
-  // clk, rst_n,
+  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(P));
 
-  // All output pins must be assigned. If not used, assign to 0.
+  // TODO : latch the outputs
+
+  // "All output pins must be assigned. If not used, assign to 0."
   assign uo_out  = P; // output the product.
   assign uio_out = 0; // no output on uio.
   assign uio_oe  = 0; // uio port is only in.
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, 1'b0};
+  wire _unused = &{ena, Sen1, Sen2, Uen1, Uen2, 1'b0};
 
 endmodule
