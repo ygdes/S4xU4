@@ -2,7 +2,7 @@
 // a small Signed×Unsigned multiplier
 // © 2026 Yann Guidon
 // complement+shift : https://www.falstad.com/s.php?s=LYiwX8
-// adder: https://www.falstad.com/s.php?s=VlpSEz
+// adder: https://www.falstad.com/s.php?s=8FE1a8
 // depends on FullAdder_sg13.v
 
 module mulS4xU4(
@@ -102,9 +102,7 @@ module mulS4xU4(
   sg13_inv_1  ivU3(.A(lU3_t2), .Y(cU[3])); // fo4
 
   // cU[4] = lSn3 & (lUn3 | lU3_t0)
-  wire lU4_t1;
   sg13_a21oi_1  aoU4(.A1(lUn3), .A2(lU3_t0), .B1(lSn3), .Y(cU[4]));
-//  sg13_inv_1    ivU4(.A(lU4_t1), .Y(cU[4])); // fo3
 
   assign P[7]=cU[4];  // yeah, at last a 2nd bit !
 
