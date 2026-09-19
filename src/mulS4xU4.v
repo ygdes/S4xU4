@@ -85,7 +85,7 @@ module mulS4xU4(
   // cU[1] = lU[1] ^ ~(lS[3] & lU[0]) 
   wire lU1_t1, lU1_t2;
   sg13_nand2_1  naU1(.A(lS[3]), .B(lU[0]), .Y(lU1_t1));
-  sg13_xor2_1   xoU1(.A(lU[1]), .B(lU1_t1), .X(lS1_t2));
+  sg13_xor2_1   xoU1(.A(lU[1]), .B(lU1_t1), .X(lU1_t2));
   sg13_inv_1    ivU1(.A(lU1_t2), .Y(cU[1])); // fo4
 
   // cU[2] = lU[2] ^ ~(lS[3] & (lU[0] | lU[1]))
