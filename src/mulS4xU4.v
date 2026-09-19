@@ -188,7 +188,15 @@ module mulS4xU4(
 
   // Take a breath, and carry on
   sg13_a21o_1  ao(.A1(P2), .A2(G1), .B1(G2), .X(t3));
-  
 
+  // more outputs
+  sg13_xor2_1  xo3(.A(t3), .B(X3), .X(P[4]));
+
+  sg13_a21oi_1 ao4(.A1(t3), .A2(P3), .B1(G3), .Y(t4));
+  sg13_xnor2_1  xo4(.A(t4), .B(X4), .X(P[5]));
+
+  sg13_a221oi_1 ao5(.A1(t3), .A2(P34), .B1(G3), .B2(P4), .C1(G4), .Y(t5));
+  sg13_xnor2_1  xo4(.A(t5), .B(X5), .X(P[6]));
+  
   wire _unused = &{lUdum, 1'b0};
 endmodule
