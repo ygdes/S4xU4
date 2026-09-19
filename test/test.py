@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
+# SPDX-FileCopyrightText: © 2026 Yann Guidon
 # SPDX-License-Identifier: Apache-2.0
 
 import cocotb
@@ -16,22 +16,27 @@ from cocotb.triggers import ClockCycles
 
 @cocotb.test()
 async def test_project(dut):
-    dut._log.info("Start")
+  dut._log.info("Start")
 
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 10, unit="us")
-    cocotb.start_soon(clock.start())
+  # Set the clock period to 10 us (100 KHz)
+  clock = Clock(dut.clk, 10, unit="us")
+  cocotb.start_soon(clock.start())
 
-    # Reset
-    dut._log.info("Reset")
-    dut.ena.value = 1
-    dut.ui_in.value = 0
-    dut.uio_in.value = 0
-    dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 2)
-    dut.rst_n.value = 1
+  # Reset
+  dut._log.info("Reset")
+  dut.ena.value = 1
+  dut.ui_in.value = 0
+  dut.uio_in.value = 0
+  dut.rst_n.value = 0
+  await ClockCycles(dut.clk, 4
+  dut.rst_n.value = 1
 
-    dut._log.info("Test project behavior")
+  dut._log.info("Test project behavior")
+
+  for i in range(0, 255):
+    dut.ui_in.value = i;
+    await ClockCycles(dut.clk, 1)
+    print(str(i) + " -> " + str(dut.uo_out.value))
 
     # Set the input values you want to test
     # dut.ui_in.value = 20
