@@ -45,6 +45,7 @@ async def test_project(dut):
       diag=" ."
       if val != (U*S):
          diag=" ***"
+      assert val == (U*S)
       dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(val)+ diag)
 
     # Set the input values you want to test
