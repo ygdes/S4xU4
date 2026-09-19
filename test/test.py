@@ -41,7 +41,7 @@ async def test_project(dut):
       await ClockCycles(dut.clk, 6)
       val = int(dut.uo_out.value)
       if dut.uo_out.value[7] == 1:
-        val = 256-val
+        val = val-256
       dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(val))
 
     # Set the input values you want to test
