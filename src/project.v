@@ -49,6 +49,6 @@ module tt_um_S4xU4 (
   assign uio_oe  = 0; // uio port is only in.
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, Sen1, Sen2, Uen1, Uen2, 1'b0};
+  wire _unused = &{ena, Sen1, Sen2, Uen1, Uen2, uio_in[7], uio_in[6], 1'b0};
 
 endmodule
