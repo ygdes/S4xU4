@@ -177,14 +177,17 @@ module mulS4xU4(
   sg13_xor2_1  PGX5x(.A(A5n), .B(B5n), .X(X5));
 
   // some intermediary signals
-  sg13_and2_1  (.A(Partial0[1]),  .B(Partial1[1]),         .X(G0));
-  sg13_and3_1  (.A(Partial0[1]),  .B(Partial1[1]), .C(A1), .X(G1));
-  sg13_and2_1  (.A(P3),  .B(P4),  .X(P34));
+  sg13_and2_1  int1(.A(Partial0[1]),  .B(Partial1[1]),         .X(G0));
+  sg13_and3_1  int2(.A(Partial0[1]),  .B(Partial1[1]), .C(A1), .X(G1));
+  sg13_and2_1  int3(.A(P3),  .B(P4),  .X(P34));
 
   // at last some outputs:
-  sg13_xor2_1  (.A(Partial0[1]),  .B(Partial1[1]),  .X(P[1]));
-  sg13_xor2_1  (.A(G0),           .B(A1),           .X(P[2]));
+  sg13_xor2_1  xo1(.A(Partial0[1]),  .B(Partial1[1]),  .X(P[1]));
+  sg13_xor2_1  xo2(.A(G0),           .B(A1),           .X(P[2]));
+  sg13_xor2_1  xo3(.A(G1),           .B(X2),           .X(P[3]));
 
+  // Take a breath, and carry on
+  sg13_a21o_1  ao(.A1(P2), .A2(G1), .B1(G2), .X(t3));
   
 
   wire _unused = &{lUdum, 1'b0};
