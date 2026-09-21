@@ -95,12 +95,12 @@ async def test_project(dut):
     if dut.uio_out.value[7] == 1:
       res = res-512
 
+    expected = vals[0]+vals[1]+vals[2]
     tag=" == "
     if res != expected:
       tag = " *** "
       errors = errors+1
 
-    expected = vals[0]+vals[1]+vals[2]
     dut._log.info(
        str(index)+": "+
        str(val)+"=>"+
