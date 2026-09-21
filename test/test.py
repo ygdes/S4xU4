@@ -32,24 +32,41 @@ async def test_project(dut):
   dut.rst_n.value = 1
 
   dut._log.info("Test project behavior")
-
-  dut.uio_in.value = Sen0 + Uen0
+  errors=0
 
   for U in range(0, 16):
     for S in range(-8, 8):
+      dut.ui_in.value = (U << 4)|(S & 15);
+
       # 3-stage binary counter
       for n1 in range(0, 2):
         for n2 in range(0, 2):
           for n3 in range(0, 2):
             mul = n1 + n2 + n3
 
-      dut.ui_in.value = (U << 4)|(S & 15);
-      await ClockCycles(dut.clk, 6)
-      val = int(dut.uo_out.value)
-      if dut.uo_out.value[7] == 1:
-        val = val-256
-      diag=" ."
-      if val != (U*S):
-         diag=" ***"
-      assert val == (U*S)
-      dut._log.info(str(U) + " * " + str(S) + " => " + str(dut.uo_out.value) + " : " + str(val)+ diag)
+            # reset cycle
+            dut.rst_n.value = 0
+            await ClockCycles(dut.clk, 1)
+            dut.rst_n.value = 1
+
+            # enable the multipliers
+            dut.uio_in.value = ((Sen0 + Uen0) * n1) \
+                             + ((Sen1 + Uen1) * n2) \
+                             + ((Sen2 + Uen2) * n3)
+            await ClockCycles(dut.clk, 6)
+            # read the sum of products
+            val = int(dut.uo_out.value) + (dut.uio_out.value[6] * 256)
+            if dut.uio_out.value[7] == 1:
+              val = val-512
+            diag = " == "
+            expected = U*S*mul
+
+            if val != expected:
+              diag = " *** "
+              errors = errors+1
+            # assert val == expected
+            dut._log.info(str(n1)+str(n2)+str(n3)+": "+str(mul)+" * "+
+                  str(U)+" * "+ str(S) + " => " + str(dut.uo_out.value) +
+                  " : " + str(val)+ diag+str(expected))
+
+  dut._log.info(str(errors) + " errors.")
