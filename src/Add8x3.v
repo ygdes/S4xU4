@@ -22,8 +22,8 @@ module Add8x3(
   FullAdderSG13 fa5(.d1(op1[5]),.d2(op2[5]), .d3(op3[5]), .S(S[5]), .C(C[5]));
   FullAdderSG13 fa6(.d1(op1[6]),.d2(op2[6]), .d3(op3[6]), .S(S[6]), .C(C[6]));
   FullAdderSG13 fa7(.d1(op1[7]),.d2(op2[7]), .d3(op3[7]), .S(S[7]), .C(C[7]));
-  assign A = {};
-  assign B = {};
-  assign T = A+B // 9-bit adder with no Carry In or Carry Out
+  assign A = {C[7],       C     };
+  assign B = {S[7], S[7], S[7:1]};
+  assign T = A+B; // 9-bit adder with no Carry In or Carry Out
   assign S3 = { T , S[0]};
 endmodule
