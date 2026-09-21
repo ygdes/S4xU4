@@ -101,7 +101,7 @@ async def test_project(dut):
        str(expcted))
   
     index = index+1
-    if index > 2
+    if index > 2:
       index=0;
 
   dut._log.info(str(errors) + " errors.")
