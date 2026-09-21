@@ -78,7 +78,7 @@ async def test_project(dut):
   vals=[0,0,0]
   index=0
 
-  for i in range(0, 100)
+  for i in range(0, 100):
     val = (val+13) & 255 # what a sublime PRNG !
 #    dut.ui_in.value = val
     U = val >> 4
