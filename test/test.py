@@ -78,7 +78,7 @@ async def test_project(dut):
   vals=[0,0,0]
   index=0
 
-  for i in range(0, 100):
+  for i in range(0, 2000):
     val = (val+13) & 255 # what a sublime PRNG !
 
     dut.ui_in.value = val
@@ -94,6 +94,11 @@ async def test_project(dut):
     res = int(dut.uo_out.value) + (int(dut.uio_out.value[6]) * 256)
     if dut.uio_out.value[7] == 1:
       res = res-512
+
+    tag=" == "
+    if res != expected:
+      tag = " *** "
+      errors = errors+1
 
     expected = vals[0]+vals[1]+vals[2]
     dut._log.info(
