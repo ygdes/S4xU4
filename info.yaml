@@ -19,6 +19,7 @@ project:
   source_files:
     - "project.v"
     - "mulS4xU4.v"
+    - "Add8x3.v"
     - "FullAdder_sg13.v"
     - "sg13_cells_sg13g2.v" # change to target techno
 
