@@ -4,11 +4,13 @@
 
 ## What is this tile ?
 
-It performs an integer multiplication, one operand is Signed 4 bits, the other is Unsigned 4 bits, as the name suggests.
+As the name suggests, it performs an integer multiplication, one operand is Signed 4 bits, the other is Unsigned 4 bits.
 
 These two operands have a separate buffer, allowing independent updates.
 
 Due to the small size, a different kind of logic and material optimisations are used, so it's a bit unusual.
+
+Bonus: the multiplier is replicated 3 times and the products are summed. Each multiplier has their own pair of input latch enable signals.
 
 [Read the documentation for project](docs/info.md)
 
@@ -19,4 +21,4 @@ Due to the small size, a different kind of logic and material optimisations are 
 
 ## What next?
 
-It might be implemented in more complex designs.
+First we'll see whether and how it works.
