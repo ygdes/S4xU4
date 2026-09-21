@@ -88,7 +88,7 @@ async def test_project(dut):
       S=S-16
     vals[index] = U * S
     dut.uio_in.value = (Sen0 + Uen0) << index
-    await ClockCycles(dut.clk, 2)
+    await ClockCycles(dut.clk, 3)
 
     # read the sum of products
     res = int(dut.uo_out.value) + (int(dut.uio_out.value[6]) * 256)
