@@ -37,6 +37,12 @@ async def test_project(dut):
 
   for U in range(0, 16):
     for S in range(-8, 8):
+      # 3-stage binary counter
+      for n1 in range(0, 2):
+        for n2 in range(0, 2):
+          for n3 in range(0, 2):
+            mul = n1 + n2 + n3
+
       dut.ui_in.value = (U << 4)|(S & 15);
       await ClockCycles(dut.clk, 6)
       val = int(dut.uo_out.value)
