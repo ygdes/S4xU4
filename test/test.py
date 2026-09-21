@@ -80,13 +80,20 @@ async def test_project(dut):
 
   for i in range(0, 100):
     val = (val+13) & 255 # what a sublime PRNG !
-#    dut.ui_in.value = val
+
+    dut.ui_in.value = val
     U = val >> 4
     S = val & 15
     if S > 7:
       S=S-16
     vals[index] = U * S
-#    dut.uio_in.value = (Sen0 + Uen0) << index
+    dut.uio_in.value = (Sen0 + Uen0) << index
+    await ClockCycles(dut.clk, 2)
+
+    # read the sum of products
+    res = int(dut.uo_out.value) + (int(dut.uio_out.value[6]) * 256)
+    if dut.uio_out.value[7] == 1:
+      res = res-512
 
     expected = vals[0]+vals[1]+vals[2]
     dut._log.info(
@@ -98,7 +105,8 @@ async def test_project(dut):
        str(vals[0])+ " + " +
        str(vals[1])+ " + " +
        str(vals[2])+ " = " +
-       str(expected))
+       str(expected)+ " ??? "+
+       str(res))
   
     index = index+1
     if index > 2:
