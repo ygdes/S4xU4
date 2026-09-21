@@ -33,8 +33,8 @@ module tt_um_S4xU4 (
   assign Uen2 = uio_in[5];
 
   mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(P1));
-  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen1), .Uen(Uen1), .S(S), .U(U), .P(P2));
-  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen2), .Uen(Uen2), .S(S), .U(U), .P(P3));
+  mulS4xU4  mul1(.Clk(clk), .Rst_n(rst_n), .Sen(Sen1), .Uen(Uen1), .S(S), .U(U), .P(P2));
+  mulS4xU4  mul2(.Clk(clk), .Rst_n(rst_n), .Sen(Sen2), .Uen(Uen2), .S(S), .U(U), .P(P3));
 
   Add8x3 summer(.op1(P1), .op2(P2), .op3(P3), .S3(tSum));
 
