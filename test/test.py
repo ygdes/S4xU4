@@ -69,4 +69,40 @@ async def test_project(dut):
                   str(U)+" * "+ str(S) + " => " + str(dut.uo_out.value) +
                   " : " + str(val)+ diag+str(expected))
 
+
+  # another reset cycle
+  dut.rst_n.value = 0
+  await ClockCycles(dut.clk, 1)
+  dut.rst_n.value = 1
+
+  vals=[0,0,0]
+  index=0
+
+  for i in range(0, 100)
+    val = (val+13) & 255 # what a sublime PRNG !
+#    dut.ui_in.value = val
+    U = val >> 4
+    S = val & 15
+    if S > 7:
+      S=S-16
+    vals[index] = U * S
+#    dut.uio_in.value = (Sen0 + Uen0) << index
+
+    expected = vals[0]+vals[1]+vals[2]
+    dut._log.info(
+       str(index)+": "+
+       str(val)+"=>"+
+       str(U)+"*"+
+       str(S)+"="+
+       str(U*S)+"  -  "+
+       str(vals[0])+ " + " +
+       str(vals[1])+ " + " +
+       str(vals[2])+ " = " +
+       str(expcted))
+  
+    index = index+1
+    if index > 2
+      index=0;
+
   dut._log.info(str(errors) + " errors.")
+  assert errors == 0
