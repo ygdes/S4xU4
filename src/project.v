@@ -19,7 +19,8 @@ module tt_um_S4xU4 (
   // interface: what sup ?
   wire [3:0] S;
   wire [3:0] U;
-    wire [7:0] P, tP;
+  wire [7:0] P1, P2, P3;
+  wire [9:0] Sum, tSum;
   assign S = ui_in[3:0];
   assign U = ui_in[7:4];
 
@@ -31,24 +32,29 @@ module tt_um_S4xU4 (
   assign Uen1 = uio_in[4];
   assign Uen2 = uio_in[5];
 
-  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(tP));
+  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen0), .Uen(Uen0), .S(S), .U(U), .P(P1));
+  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen1), .Uen(Uen1), .S(S), .U(U), .P(P2));
+  mulS4xU4  mul0(.Clk(clk), .Rst_n(rst_n), .Sen(Sen2), .Uen(Uen2), .S(S), .U(U), .P(P3));
+
+  Add8x3 summer(.op1(P1), .op2(P2), .op3(P3), .S3(tSum));
 
   // latch the outputs to keep the timing tight
-  sg13_dfrbpq_1 DffBuff0(.Q(P[0]), .D(tP[0]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff1(.Q(P[1]), .D(tP[1]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff2(.Q(P[2]), .D(tP[2]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff3(.Q(P[3]), .D(tP[3]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff4(.Q(P[4]), .D(tP[4]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff5(.Q(P[5]), .D(tP[5]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff6(.Q(P[6]), .D(tP[6]), .RESET_B(rst_n), .CLK(clk));
-  sg13_dfrbpq_1 DffBuff7(.Q(P[7]), .D(tP[7]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff0(.Q(Sum[0]), .D(tSum[0]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff1(.Q(Sum[1]), .D(tSum[1]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff2(.Q(Sum[2]), .D(tSum[2]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff3(.Q(Sum[3]), .D(tSum[3]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff4(.Q(Sum[4]), .D(tSum[4]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff5(.Q(Sum[5]), .D(tSum[5]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff6(.Q(Sum[6]), .D(tSum[6]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff7(.Q(Sum[7]), .D(tSum[7]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff8(.Q(Sum[8]), .D(tSum[8]), .RESET_B(rst_n), .CLK(clk));
+  sg13_dfrbpq_1 DffBuff9(.Q(Sum[9]), .D(tSum[9]), .RESET_B(rst_n), .CLK(clk));
   
   // "All output pins must be assigned. If not used, assign to 0."
-  assign uo_out  = P; // output the product.
-  assign uio_out = 0; // no output on uio.
-  assign uio_oe  = 0; // uio port is only in.
+  assign uo_out  = Sum; // output the products' sum.
+  assign uio_out = {Sum[9], Sum[8], 6'b000000}; // MSB on uio.
+  assign uio_oe  = 8'b11000000; // uio port is in for the 6 LSB.
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, Sen1, Sen2, Uen1, Uen2, uio_in[7], uio_in[6], 1'b0};
-
+  wire _unused = &{ena, uio_in[7], uio_in[6], 1'b0};
 endmodule
