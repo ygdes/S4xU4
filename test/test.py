@@ -98,7 +98,7 @@ async def test_project(dut):
        str(vals[0])+ " + " +
        str(vals[1])+ " + " +
        str(vals[2])+ " = " +
-       str(expcted))
+       str(expected))
   
     index = index+1
     if index > 2:
