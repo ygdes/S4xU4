@@ -8,7 +8,7 @@ module Add8x3(
   input  wire[7:0] op1,
   input  wire[7:0] op2,
   input  wire[7:0] op3,
-  output wire[7:0] S3
+  output wire[9:0] S3
 );
   wire[7:0] C, S;
   wire[9:1] A, B, T;
