@@ -55,7 +55,7 @@ async def test_project(dut):
                              + ((Sen2 + Uen2) * n3)
             await ClockCycles(dut.clk, 6)
             # read the sum of products
-            val = int(dut.uo_out.value) + (dut.uio_out.value[6] * 256)
+            val = int(dut.uo_out.value) + (int(dut.uio_out.value[6]) * 256)
             if dut.uio_out.value[7] == 1:
               val = val-512
             diag = " == "
