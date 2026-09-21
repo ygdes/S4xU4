@@ -31,10 +31,10 @@ pinout:
   ui[1]: "Signed operand bit 1"
   ui[2]: "Signed operand bit 2"
   ui[3]: "Signed operand bit 3"
-  ui[4]: "Unsgned operand bit 0"
-  ui[5]: "Unsgned operand bit 1"
-  ui[6]: "Unsgned operand bit 2"
-  ui[7]: "Unsgned operand bit 3"
+  ui[4]: "Unsigned operand bit 0"
+  ui[5]: "Unsigned operand bit 1"
+  ui[6]: "Unsigned operand bit 2"
+  ui[7]: "Unsigned operand bit 3"
 
   # Outputs
   uo[0]: "Sum bit 0"
