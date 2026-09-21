@@ -51,7 +51,7 @@ module tt_um_S4xU4 (
   sg13_dfrbpq_1 DffBuff9(.Q(Sum[9]), .D(tSum[9]), .RESET_B(rst_n), .CLK(clk));
   
   // "All output pins must be assigned. If not used, assign to 0."
-  assign uo_out  = Sum; // output the products' sum.
+  assign uo_out  = Sum[7:0]; // output the products' sum.
   assign uio_out = {Sum[9], Sum[8], 6'b000000}; // MSB on uio.
   assign uio_oe  = 8'b11000000; // uio port is in for the 6 LSB.
 
